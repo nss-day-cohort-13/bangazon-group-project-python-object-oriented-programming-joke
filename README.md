@@ -138,19 +138,19 @@ example: id=1,first_name=Dave,last_name=Chappelle,etc...
 
 Create a payment_options.txt file
 This will include id number, customer id, and payment options information
-example: id=1, customer_id=1, payment_option=AMEX
+example: id=1,customer_id=1,payment_option=AMEX
 
 Create a products.txt file
 This will include id number, product name, product price information.
-example: id=1, customer_id=1, payment_option=1, product=Bicycle, product_price=300.50
+example: id=1,customer_id=1,payment_option=1,product=Bicycle,product_price=300.50
 
 Create an order.txt file
 This will include id number, customer id, payment id, and complete flag
-example: id=1, customer_id=1, payment_id=1,etc...
+example: id=1,customer_id=1,payment_id=1,etc...
 
 Create an line_items.txt file
 This will include id number, order id, product id
-example: id=1, order_id=1, product_id=1
+example: id=1,order_id=1,product_id=1
 ```
 
 1. You can use `input()` and `print()` to show prompts and read user input.
