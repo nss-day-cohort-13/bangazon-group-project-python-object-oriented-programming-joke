@@ -19,9 +19,6 @@ class TestOrder(unittest.TestCase):
 
         self.assertEqual(Order.next_order_id, 2)
 
-    def test_next_order_id_increments(self):
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()
