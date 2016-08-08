@@ -16,7 +16,14 @@ class TestEasyIO(unittest.TestCase):
             self.assertEqual(test_read, data)
 
     def test_deserialize_no_file(self):
-        pass
+        filename = 'testfile_io.dat'
+
+        data = [2, 'c', ['a', 'different', 'list']]
+        with open(filename, 'wb') as write_file:
+            pickle.dump(data, filename)
+
+        read_data = deserialize(filename, [None])
+        self.assertEqual(read_data, data)
 
     def test_deserialize_existing(self):
         pass
