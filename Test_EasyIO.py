@@ -20,7 +20,7 @@ class TestEasyIO(unittest.TestCase):
 
         data = [2, 'c', ['a', 'different', 'list']]
         with open(filename, 'wb') as write_file:
-            pickle.dump(data, filename)
+            pickle.dump(data, write_file)
 
         read_data = deserialize(filename, [None])
         self.assertEqual(read_data, data)
