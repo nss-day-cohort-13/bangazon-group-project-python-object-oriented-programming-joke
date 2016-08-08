@@ -1,6 +1,6 @@
 import unittest
 
-from order import *
+from product import *
 
 class TestProduct(unittest.TestCase):
 
@@ -17,9 +17,6 @@ class TestProduct(unittest.TestCase):
         product = Product('water', 1.25)
 
         self.assertEqual(Product.next_product_id, 2)
-
-    def test_next_product_id_increments(self):
-        pass
 
 
 if __name__ == '__main__':
