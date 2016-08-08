@@ -26,7 +26,11 @@ class TestEasyIO(unittest.TestCase):
         self.assertEqual(read_data, data)
 
     def test_deserialize_existing(self):
-        pass
+        filename = 'no_file.dat'
+        fallback = [None]
+
+        read_data = deserialize(filename, fallback)
+        self.assertEqual(read_data, fallback)
 
 
 if __name__ == '__main__':
