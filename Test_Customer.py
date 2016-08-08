@@ -17,8 +17,8 @@ class TestCustomer(unittest.TestCase):
         self.assertEqual(cust.address, '1 Main St')
         self.assertEqual(cust.city, 'Nashville')
         self.assertEqual(cust.state, 'TN')
-        self.assertEqual(cust.zip, '37210')
-        self.assertEqual(cust.phone, '123-4566-7890')
+        self.assertEqual(cust.zipcode, '37210')
+        self.assertEqual(cust.phone, '123-456-7890')
 
     def test_next_customer_id_increments(self):
         Customer.next_customer_id = 1
@@ -39,8 +39,6 @@ class TestCustomer(unittest.TestCase):
 
         self.assertEqual(Customer.next_customer_id, 3)
 
-    def test_next_customer_id_increments(self):
-        pass
 
 
 if __name__ == '__main__':
