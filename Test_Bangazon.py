@@ -40,15 +40,12 @@ class TestBangazon(unittest.TestCase):
         self.bangazon.create_new_order(customer_id, payment_option_id)
         self.assertEqual(len(self.bangazon.orders), initial_order_count + 1)
 
-    def test_add_product_to_new_order(self):
+    def test_add_product_to_order(self):
         initial_line_item_count = len(self.bangazon.order_line_items)
         order_id = 1
         product_id = 1
         self.bangazon.add_product_to_order(order_id, product_id)
         self.assertEqual(len(self.bangazon.order_line_items), initial_line_item_count + 1)
-
-    def test_add_product_to_existing_order(self):
-        pass
 
     def test_complete_order(self):
         active_order = 1
@@ -56,8 +53,63 @@ class TestBangazon(unittest.TestCase):
         self.assertTrue(active_order.is_paid)
 
     def test_get_popular_products(self):
-        pass
+        bangazon = Bangazon()
+        bangazon.products = {
+            1: Product('Item A', 0.50),
+            2: Product('Item B', 0.75),
+            3: Product('Item C', 1.10)}
+        bangazon.orders = {
+            1: Order(1, 1, True),
+            2: Order(2, 1, True),
+            3: Order(1, 1, True),
+            4: Order(1, 1, True)}
+        bangazon.line_items = {
+            1: OrderLineItem(1, 1),
+            2: OrderLineItem(1, 1),
+            3: OrderLineItem(1, 1),
+            4: OrderLineItem(1, 2),
+            5: OrderLineItem(1, 2),
+            6: OrderLineItem(1, 3),
+            7: OrderLineItem(1, 3),
+            8: OrderLineItem(1, 3),
+            9: OrderLineItem(1, 3),
+            10: OrderLineItem(2, 2),
+            11: OrderLineItem(2, 3),
+            12: OrderLineItem(3, 1),
+            13: OrderLineItem(3, 2),
+            14: OrderLineItem(3, 2),
+            15: OrderLineItem(3, 3)}
 
+        expected = {
+            totals: {
+                order_sum: 15,
+                customer_sum: 8,
+                revenue_sum: 12.35
+            },
+            products: [
+                {
+                    name: 'Item A',
+                    order_count: 4,
+                    customer_count: 2,
+                    revenue: 2.0
+                },
+                {
+                    name: 'Item B',
+                    order_count: 5,
+                    customer_count: 3,
+                    revenue: 3.75
+                },
+                {
+                    name: 'Item C',
+                    order_count: 6,
+                    customer_count: 3,
+                    revenue: 6.60
+                }
+            ]
+        }
+
+        result = bangazon.get_popular_products()
+        self.assertEqual(result, expected)
 
 
 if __name__ == '__main__':
