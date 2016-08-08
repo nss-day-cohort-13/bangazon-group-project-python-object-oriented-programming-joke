@@ -6,6 +6,9 @@ class Customer:
     next_customer_id = 1
 
     def __init__(self, name, address, city, state, zipcode, phone):
+        """
+        __init__ function passes in varibles to store the information on the class
+        """
         self.name = name
         self.address = address
         self.city = city
