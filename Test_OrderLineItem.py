@@ -1,6 +1,6 @@
 import unittest
 
-from order import *
+from order_line_item import *
 
 class TestOrderLineItem(unittest.TestCase):
 
@@ -17,9 +17,6 @@ class TestOrderLineItem(unittest.TestCase):
         OrderLineItem(1, 2)
 
         self.assertEqual(OrderLineItem.next_line_item_id, 2)
-
-    def test_next_order_line_item_id_increments(self):
-        pass
 
 
 if __name__ == '__main__':
