@@ -17,9 +17,9 @@ class PaymentOption(object):
             payment_type      the form of payment
             account_number    the account number for the payment type
             customer_id       the customer associated with the payment option
-
         """
 
+        self.id = PaymentOption.next_payment_option_id
         self.payment_type = payment_type
         self.account_number = account_number
         self.customer_id = customer_id

@@ -8,7 +8,7 @@ class TestPaymentOption(unittest.TestCase):
         payment_option = PaymentOption('Amex', 123456789, 1)
 
         self.assertNotEqual(payment_option, 0)
-        self.assertEqual(payment_option.name, 'Amex')
+        self.assertEqual(payment_option.payment_type, 'Amex')
         self.assertEqual(payment_option.account_number, 123456789)
         self.assertEqual(payment_option.customer_id, 1)
 
