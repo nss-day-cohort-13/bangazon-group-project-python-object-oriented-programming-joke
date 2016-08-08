@@ -44,15 +44,15 @@ class TestBangazon(unittest.TestCase):
         initial_line_item_count = len(self.bangazon.order_line_items)
         order_id = 1
         product_id = 1
-        self.bangazon.add_product_to_order(1,1)
+        self.bangazon.add_product_to_order(order_id, product_id)
         self.assertEqual(len(self.bangazon.order_line_items), initial_line_item_count + 1)
 
     def test_add_product_to_existing_order(self):
         pass
 
     def test_complete_order(self):
-        active_order = self.bangazon.orders['1']
-        self.pay_order(active_order)
+        active_order = 1
+        self.bangazon.pay_order(active_order)
         self.assertTrue(active_order.is_paid)
 
     def test_get_popular_products(self):
