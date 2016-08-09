@@ -30,8 +30,8 @@ class TestBangazon(unittest.TestCase):
 
     def test_select_active_customer(self):
         customer_id = 1
-        active_customer = self.bangazon.select_active_customer(customer_id)
-        self.assertEqual(active_customer.name, 'John Doe')
+        self.bangazon.select_active_customer(customer_id)
+        self.assertEqual(self.bangazon.active_customer_id, customer_id)
 
     def test_create_new_order(self):
         initial_order_count = len(self.bangazon.orders)
@@ -48,13 +48,15 @@ class TestBangazon(unittest.TestCase):
         self.assertEqual(len(self.bangazon.order_line_items), initial_line_item_count + 1)
 
     def test_complete_order(self):
-        active_order = 1
-        self.bangazon.pay_order(active_order)
+        self.bangazon.orders = {1: Order(2)}
+        self.bangazon.active_order_id = 1
+        active_order = self.bangazon.orders[self.bangazon.active_order_id]
+        self.bangazon.pay_order()
         self.assertTrue(active_order.is_paid)
 
     def test_get_popular_products(self):
         self.maxDiff = None
-        
+
         bangazon = Bangazon()
         bangazon.products = {
             1: Product('Item A', 0.50),

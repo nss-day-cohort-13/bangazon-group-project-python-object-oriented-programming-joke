@@ -1,4 +1,4 @@
-class Order(object):
+class Order:
     """
     Contain data for a single order.
 
