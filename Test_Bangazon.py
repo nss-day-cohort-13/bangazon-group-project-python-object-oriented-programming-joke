@@ -55,6 +55,16 @@ class TestBangazon(unittest.TestCase):
         self.bangazon.pay_order()
         self.assertTrue(active_order.is_paid)
 
+    def test_new_payment_creation(self):
+        bangazon = Bangazon()
+        bangazon.active_customer_id = 1
+        initial_payment_count = len(bangazon.payment_options)
+        customer_id = 1
+        payment_type = 'Visa'
+        account_number = 12345
+        bangazon.create_new_payment(payment_type, account_number, customer_id)
+        self.assertEqual(len(bangazon.payment_options), initial_payment_count + 1)
+
     def test_get_popular_products(self):
         self.maxDiff = None
 

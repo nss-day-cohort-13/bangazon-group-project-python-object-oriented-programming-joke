@@ -28,6 +28,11 @@ class Bangazon(object):
         active_order = self.orders[self.active_order_id]
 
         active_order.is_paid = True
+    def create_new_payment(self, payment_type, account_number, customer_id):
+        if self.active_customer_id == 0:
+            return
+        new_payment = PaymentOption(payment_type, account_number, customer_id)
+        self.payment_options[new_payment.id] = new_payment
 
     def create_new_order(self, customer_id, payment_option_id):
         if self.active_order_id == 0:
