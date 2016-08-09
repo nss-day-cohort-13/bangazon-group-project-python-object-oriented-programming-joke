@@ -41,7 +41,11 @@ class Menu:
         print('Your new user has been created')
 
     def prompt_choose_customer(self):
-        pass
+        customer_menu = {
+            '{}. {}'.format(c.id, c.name):c for c in self.bang.customers.values()}
+        chosen_user = show_menu('', customer_menu, '')
+        self.bang.select_active_customer(chosen_user.id)
+        print('You are using Bangazon as ' + chosen_user.name)
 
     def prompt_create_payment(self):
         pass
