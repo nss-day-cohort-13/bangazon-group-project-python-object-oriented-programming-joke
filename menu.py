@@ -7,8 +7,45 @@ class Menu:
         self.bang = Bangazon()
 
     def main(self):
+        title = 'Welcome to Bangazon! Command Line Ordering System'
+
+        heading = '\n'
+        heading += '*' * 54 + '\n'
+        heading += '*' + title.center(52, ' ') + '*' + '\n'
+        heading += '*' * 54 + '\n'
+
+        menu = {
+            '1. Create a customer account': self.prompt_customer,
+            '2. Choose active customer': self.prompt_choose_customer,
+            '3. Create a payment option': self.prompt_create_payment,
+            '4. Add product to shopping cart': self.prompt_add_product,
+            '5. Complete an order': self.prompt_complete_order,
+            '6. See product popularity': self.print_popular_products,
+            '7. Exit Bangazon!': exit
+        }
+
+        prompt_message = 'Choose an option'
+
+        choice = show_menu(heading, menu, prompt_message)
+        choice()
+
+    def prompt_customer(self):
         pass
 
+    def prompt_choose_customer(self):
+        pass
+
+    def prompt_create_payment(self):
+        pass
+
+    def prompt_add_product(self):
+        pass
+
+    def prompt_complete_order(self):
+        pass
+
+    def print_popular_products(self):
+        pass
 
 if __name__ == '__main__':
     Menu().main()
