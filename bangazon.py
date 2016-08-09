@@ -1,3 +1,4 @@
+from easy_io import *
 from customer import *
 from payment_option import *
 from product import *
@@ -5,13 +6,18 @@ from order import *
 from order_line_item import *
 
 class Bangazon(object):
+    customers_filename = 'customers.dat'
+    payment_options_filename = 'payment_options.dat'
+    products_filename = 'products.dat'
+    orders_filename = 'orders.dat'
+    line_items_filename = 'line_items.dat'
 
     def __init__(self):
-        self.customers = dict()
-        self.payment_options = dict()
-        self.products = dict()
-        self.orders = dict()
-        self.order_line_items = dict()
+        self.customers = deserialize(Bangazon.customers_filename ,dict())
+        self.payment_options = deserialize(Bangazon.payment_options_filename ,dict())
+        self.products = deserialize(Bangazon.products_filename ,dict())
+        self.orders = deserialize(Bangazon.orders_filename ,dict())
+        self.order_line_items = deserialize(Bangazon.line_items_filename ,dict())
 
         self.active_customer_id = 0
         self.active_order_id = 0
@@ -30,6 +36,7 @@ class Bangazon(object):
         """
         new_cust = Customer(name, address, city, state, zipcode, phone)
         self.customers[new_cust.id] = new_cust
+        serialize(self.customers, Bangazon.customers_filename)
 
     def pay_order(self):
         """
@@ -41,6 +48,7 @@ class Bangazon(object):
 
         active_order = self.orders[self.active_order_id]
         active_order.is_paid = True
+        serialize(self.orders, Bangazon.orders_filename)
 
     def create_new_order(self, customer_id, payment_option_id):
         """
@@ -54,6 +62,7 @@ class Bangazon(object):
             new_order = Order(customer_id, payment_option_id=0, is_paid=False)
             self.orders[new_order.id] = new_order
             self.active_order_id = new_order.id
+            serialize(self.orders, Bangazon.orders_filename)
 
     def add_product_to_order(self, order_id, product_id):
         """
@@ -65,6 +74,7 @@ class Bangazon(object):
         """
         new_line_item = OrderLineItem(order_id, product_id)
         self.order_line_items[new_line_item.id] = new_line_item
+        serialize(self.order_line_items, Bangazon.line_items_filename)
 
     def select_active_customer(self, customer_id):
         """
@@ -140,3 +150,4 @@ class Bangazon(object):
             return
         new_payment = PaymentOption(payment_type, account_number, customer_id)
         self.payment_options[new_payment.id] = new_payment
+        serialize(self.payment_options, Bangazon.payment_options_filename)
