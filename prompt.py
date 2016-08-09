@@ -26,17 +26,21 @@ def show_menu(heading, menu_dict, prompt_message):
     """
 
     key_matches = []
+    # continue prompting until only 1 valid match
     while len(key_matches) != 1:
         print('\n' + heading)
         [print(key) for key in sorted(menu_dict.keys())]
         choice = prompt(prompt_message)
 
+        # get all at least partial matches from the presented options
         key_matches = [key for key in menu_dict.keys()
                         if choice.lower() in key.lower()]
 
+        # notify user if no single match
         if len(key_matches) == 0: print('\n-- No matches found.')
         if len(key_matches) > 1: print('\n-- Too many matches found.')
 
+    # return the value from the dictionary
     return menu_dict[key_matches[0]]
 
 
