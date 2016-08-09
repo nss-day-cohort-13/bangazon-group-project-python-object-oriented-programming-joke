@@ -34,11 +34,12 @@ class TestBangazon(unittest.TestCase):
         self.assertEqual(self.bangazon.active_customer_id, customer_id)
 
     def test_create_new_order(self):
-        initial_order_count = len(self.bangazon.orders)
+        bangazon = Bangazon()
+        initial_order_count = len(bangazon.orders)
         customer_id = 1
         payment_option_id = 0
-        self.bangazon.create_new_order(customer_id, payment_option_id)
-        self.assertEqual(len(self.bangazon.orders), initial_order_count + 1)
+        bangazon.create_new_order(customer_id, payment_option_id)
+        self.assertEqual(len(bangazon.orders), initial_order_count + 1)
 
     def test_add_product_to_order(self):
         initial_line_item_count = len(self.bangazon.order_line_items)
@@ -48,11 +49,15 @@ class TestBangazon(unittest.TestCase):
         self.assertEqual(len(self.bangazon.order_line_items), initial_line_item_count + 1)
 
     def test_complete_order(self):
-        active_order = 1
-        self.bangazon.pay_order(active_order)
+        self.bangazon.orders = {1: Order(2)}
+        self.bangazon.active_order_id = 1
+        active_order = self.bangazon.orders[self.bangazon.active_order_id]
+        self.bangazon.pay_order()
         self.assertTrue(active_order.is_paid)
 
     def test_get_popular_products(self):
+        self.maxDiff = None
+
         bangazon = Bangazon()
         bangazon.products = {
             1: Product('Item A', 0.50),
@@ -63,7 +68,7 @@ class TestBangazon(unittest.TestCase):
             2: Order(2, 1, True),
             3: Order(1, 1, True),
             4: Order(1, 1, True)}
-        bangazon.line_items = {
+        bangazon.order_line_items = {
             1: OrderLineItem(1, 1),
             2: OrderLineItem(1, 1),
             3: OrderLineItem(1, 1),
@@ -81,29 +86,35 @@ class TestBangazon(unittest.TestCase):
             15: OrderLineItem(3, 3)}
 
         expected = {
-            totals: {
-                order_sum: 15,
-                customer_sum: 8,
-                revenue_sum: 12.35
+            'totals': {
+                'order_sum': 8,
+                'customer_sum': 5,
+                'revenue_sum': 12.35
             },
-            products: [
+            'products': [
                 {
-                    name: 'Item A',
-                    order_count: 4,
-                    customer_count: 2,
-                    revenue: 2.0
+                    'name': 'Item A',
+                    'product_id': 1,
+                    'count': 4,
+                    'order_count': 2,
+                    'customer_count': 1,
+                    'revenue': 2.0
                 },
                 {
-                    name: 'Item B',
-                    order_count: 5,
-                    customer_count: 3,
-                    revenue: 3.75
+                    'name': 'Item B',
+                    'product_id': 2,
+                    'count': 5,
+                    'order_count': 3,
+                    'customer_count': 2,
+                    'revenue': 3.75
                 },
                 {
-                    name: 'Item C',
-                    order_count: 6,
-                    customer_count: 3,
-                    revenue: 6.60
+                    'name': 'Item C',
+                    'product_id': 3,
+                    'count': 6,
+                    'order_count': 3,
+                    'customer_count': 2,
+                    'revenue': 6.60
                 }
             ]
         }
