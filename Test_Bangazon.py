@@ -55,6 +55,8 @@ class TestBangazon(unittest.TestCase):
         self.assertTrue(active_order.is_paid)
 
     def test_get_popular_products(self):
+        self.maxDiff = None
+
         bangazon = Bangazon()
         bangazon.products = {
             1: Product('Item A', 0.50),
@@ -65,7 +67,7 @@ class TestBangazon(unittest.TestCase):
             2: Order(2, 1, True),
             3: Order(1, 1, True),
             4: Order(1, 1, True)}
-        bangazon.line_items = {
+        bangazon.order_line_items = {
             1: OrderLineItem(1, 1),
             2: OrderLineItem(1, 1),
             3: OrderLineItem(1, 1),
@@ -83,29 +85,35 @@ class TestBangazon(unittest.TestCase):
             15: OrderLineItem(3, 3)}
 
         expected = {
-            totals: {
-                order_sum: 15,
-                customer_sum: 8,
-                revenue_sum: 12.35
+            'totals': {
+                'order_sum': 8,
+                'customer_sum': 5,
+                'revenue_sum': 12.35
             },
-            products: [
+            'products': [
                 {
-                    name: 'Item A',
-                    order_count: 4,
-                    customer_count: 2,
-                    revenue: 2.0
+                    'name': 'Item A',
+                    'product_id': 1,
+                    'count': 4,
+                    'order_count': 2,
+                    'customer_count': 1,
+                    'revenue': 2.0
                 },
                 {
-                    name: 'Item B',
-                    order_count: 5,
-                    customer_count: 3,
-                    revenue: 3.75
+                    'name': 'Item B',
+                    'product_id': 2,
+                    'count': 5,
+                    'order_count': 3,
+                    'customer_count': 2,
+                    'revenue': 3.75
                 },
                 {
-                    name: 'Item C',
-                    order_count: 6,
-                    customer_count: 3,
-                    revenue: 6.60
+                    'name': 'Item C',
+                    'product_id': 3,
+                    'count': 6,
+                    'order_count': 3,
+                    'customer_count': 2,
+                    'revenue': 6.60
                 }
             ]
         }
