@@ -48,7 +48,14 @@ class Menu:
         print('You are using Bangazon as ' + chosen_user.name)
 
     def prompt_create_payment(self):
-        print('Create Payment')
+        if self.bang.active_customer_id == 0:
+            print('You must choose a customer account first')
+            self.prompt_choose_customer()
+            return
+
+        payment_type = prompt('Enter Payment Type (e.g. AmEx, Visa, Checking)')
+        account_number = prompt('Enter Account Number')
+        self.bang.create_new_payment(payment_type, account_number, self.bang.active_customer_id)
 
     def prompt_add_product(self):
         print('Add Products')
