@@ -82,27 +82,30 @@ class TestBangazon(unittest.TestCase):
 
         expected = {
             totals: {
-                order_sum: 15,
-                customer_sum: 8,
+                order_sum: 8,
+                customer_sum: 5,
                 revenue_sum: 12.35
             },
             products: [
                 {
                     name: 'Item A',
-                    order_count: 4,
-                    customer_count: 2,
+                    count: 4,
+                    order_count: 2,
+                    customer_count: 1,
                     revenue: 2.0
                 },
                 {
                     name: 'Item B',
-                    order_count: 5,
-                    customer_count: 3,
+                    count: 5,
+                    order_count: 3,
+                    customer_count: 2,
                     revenue: 3.75
                 },
                 {
                     name: 'Item C',
-                    order_count: 6,
-                    customer_count: 3,
+                    count: 6,
+                    order_count: 3,
+                    customer_count: 2,
                     revenue: 6.60
                 }
             ]
