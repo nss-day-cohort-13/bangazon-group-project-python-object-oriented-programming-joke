@@ -15,3 +15,7 @@ class Bangazon(object):
 
         self.active_customer_id = 0
         self.active_order_id = 0
+
+    def select_active_customer(self, customer_id):
+        self.active_customer_id = customer_id
+        
