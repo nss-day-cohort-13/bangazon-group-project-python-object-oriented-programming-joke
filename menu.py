@@ -55,6 +55,7 @@ class Menu:
         product_menu = {
             '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
         chosen_product = show_menu('', product_menu, '')
+        self.bang.create_new_order(self.bang.active_customer_id)
         self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
         print('You have added ' + chosen_product.name + ' to your shopping cart')
 

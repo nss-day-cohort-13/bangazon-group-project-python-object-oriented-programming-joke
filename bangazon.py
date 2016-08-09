@@ -50,7 +50,7 @@ class Bangazon(object):
         active_order.is_paid = True
         serialize(self.orders, Bangazon.orders_filename)
 
-    def create_new_order(self, customer_id, payment_option_id):
+    def create_new_order(self, customer_id):
         """
         Create a new order, add it to orders dictionary
 
