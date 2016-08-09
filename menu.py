@@ -61,8 +61,12 @@ class Menu:
         print('Add Products')
 
     def prompt_complete_order(self):
+        if self.bang.active_order_id == 0:
+            print("You must have an active order before you can checkout")
+            return
+
         payment_menu = {
-            '{}. {}'.format(p.id, p.name):p for p in self.bang.payment_options.values()}
+            '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
         self.bang.pay_order(chosen_payment.id)
 
