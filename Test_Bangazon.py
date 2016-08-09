@@ -34,11 +34,12 @@ class TestBangazon(unittest.TestCase):
         self.assertEqual(self.bangazon.active_customer_id, customer_id)
 
     def test_create_new_order(self):
-        initial_order_count = len(self.bangazon.orders)
+        bangazon = Bangazon()
+        initial_order_count = len(bangazon.orders)
         customer_id = 1
         payment_option_id = 0
-        self.bangazon.create_new_order(customer_id, payment_option_id)
-        self.assertEqual(len(self.bangazon.orders), initial_order_count + 1)
+        bangazon.create_new_order(customer_id, payment_option_id)
+        self.assertEqual(len(bangazon.orders), initial_order_count + 1)
 
     def test_add_product_to_order(self):
         initial_line_item_count = len(self.bangazon.order_line_items)
