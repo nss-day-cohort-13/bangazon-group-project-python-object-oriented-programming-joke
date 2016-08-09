@@ -58,7 +58,7 @@ class TestBangazon(unittest.TestCase):
         self.bangazon.orders = {1: Order(2)}
         self.bangazon.active_order_id = 1
         active_order = self.bangazon.orders[self.bangazon.active_order_id]
-        self.bangazon.pay_order()
+        self.bangazon.pay_order(1)
         self.assertTrue(active_order.is_paid)
 
     def test_new_payment_creation(self):

@@ -58,7 +58,7 @@ class Bangazon(object):
         self.customers[new_cust.id] = new_cust
         serialize(self.customers, Bangazon.customers_filename)
 
-    def pay_order(self):
+    def pay_order(self, payment_option_id):
         """
         Pay/close an open order
 
@@ -68,6 +68,7 @@ class Bangazon(object):
             return
 
         active_order = self.orders[self.active_order_id]
+        active_order.payment_option_id = payment_option_id
         active_order.is_paid = True
         serialize(self.orders, Bangazon.orders_filename)
 
