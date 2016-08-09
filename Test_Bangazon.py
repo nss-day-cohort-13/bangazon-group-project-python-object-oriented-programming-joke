@@ -30,8 +30,8 @@ class TestBangazon(unittest.TestCase):
 
     def test_select_active_customer(self):
         customer_id = 1
-        active_customer = self.bangazon.select_active_customer(customer_id)
-        self.assertEqual(active_customer.name, 'John Doe')
+        self.bangazon.select_active_customer(customer_id)
+        self.assertEqual(self.bangazon.active_customer_id, customer_id)
 
     def test_create_new_order(self):
         initial_order_count = len(self.bangazon.orders)
