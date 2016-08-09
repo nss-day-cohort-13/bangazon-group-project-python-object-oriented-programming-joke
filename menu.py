@@ -48,13 +48,27 @@ class Menu:
         print('You are using Bangazon as ' + chosen_user.name)
 
     def prompt_create_payment(self):
-        print('Create Payment')
+        if self.bang.active_customer_id == 0:
+            print('You must choose a customer account first')
+            self.prompt_choose_customer()
+            return
+
+        payment_type = prompt('Enter Payment Type (e.g. AmEx, Visa, Checking)')
+        account_number = prompt('Enter Account Number')
+        self.bang.create_new_payment(payment_type, account_number, self.bang.active_customer_id)
 
     def prompt_add_product(self):
         print('Add Products')
 
     def prompt_complete_order(self):
-        print('Complete Order')
+        if self.bang.active_order_id == 0:
+            print("You must have an active order before you can checkout")
+            return
+
+        payment_menu = {
+            '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
+        chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
+        self.bang.pay_order(chosen_payment.id)
 
     def print_popular_products(self):
         print('Print Popular Products')
