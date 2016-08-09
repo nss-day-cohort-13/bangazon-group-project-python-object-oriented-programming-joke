@@ -31,12 +31,12 @@ class Menu:
             choice()
 
     def prompt_customer(self):
-        name = prompt("Enter Customer Name")
-        address = prompt("Enter Street Name")
-        city = prompt("Enter City")
-        state = prompt("Enter State")
-        zipcode = prompt("Enter Zip Code")
-        phone = prompt("Enter Phone Number")
+        name = prompt('Enter Customer Name')
+        address = prompt('Enter Street Name')
+        city = prompt('Enter City')
+        state = prompt('Enter State')
+        zipcode = prompt('Enter Zip Code')
+        phone = prompt('Enter Phone Number')
         self.bang.create_new_user(name, address, city, state, zipcode, phone)
         print('Your new user has been created')
 
@@ -48,16 +48,16 @@ class Menu:
         print('You are using Bangazon as ' + chosen_user.name)
 
     def prompt_create_payment(self):
-        pass
+        print('Create Payment')
 
     def prompt_add_product(self):
-        pass
+        print('Add Products')
 
     def prompt_complete_order(self):
-        pass
+        print('Complete Order')
 
     def print_popular_products(self):
-        pass
+        print('Print Popular Products')
 
 if __name__ == '__main__':
     Menu().main()
