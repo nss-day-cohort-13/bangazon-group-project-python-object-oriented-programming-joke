@@ -10,13 +10,13 @@ class TestBangazon(unittest.TestCase):
     def test_bangazon_creation(self):
         bangazon = Bangazon()
         self.assertIsInstance(bangazon, Bangazon)
-        self.assertIs(bangazon.customers, dict)
-        self.assertIs(bangazon.payment_options, dict)
-        self.assertIs(bangazon.orders, dict)
-        self.assertIs(bangazon.order_line_items, dict)
-        self.assertIs(bangazon.products, dict)
-        self.assertEqual(bangazon.active_customer, None)
-        self.assertEqual(bangazon.active_order, None)
+        self.assertIsInstance(bangazon.customers, dict)
+        self.assertIsInstance(bangazon.payment_options, dict)
+        self.assertIsInstance(bangazon.orders, dict)
+        self.assertIsInstance(bangazon.order_line_items, dict)
+        self.assertIsInstance(bangazon.products, dict)
+        self.assertEqual(bangazon.active_customer_id, 0)
+        self.assertEqual(bangazon.active_order_id, 0)
 
     def test_create_new_customer(self):
         initial_customers = len(self.bangazon.customers)
