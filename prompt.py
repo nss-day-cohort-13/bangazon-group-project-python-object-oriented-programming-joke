@@ -1,4 +1,4 @@
-def prompt(message):
+def prompt(message):    # pragma: no cover
     """
     Prompt the user for input
 
@@ -12,7 +12,7 @@ def prompt(message):
     print('\n' + message)
     return input('> ')
 
-def show_menu(heading, menu_dict, prompt_message):
+def show_menu(heading, menu_dict, prompt_message):  # pragma: no cover
     """
     Get a menu selection from the user
 
