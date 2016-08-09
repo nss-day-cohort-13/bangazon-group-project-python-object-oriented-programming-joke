@@ -3,6 +3,12 @@ import unittest
 from bangazon import *
 
 class TestBangazon(unittest.TestCase):
+    Bangazon.customers_filename = 'testfile_customers.dat'
+    Bangazon.payment_options_filename = 'testfile_payment_options.dat'
+    Bangazon.products_filename = 'testfile_products.dat'
+    Bangazon.orders_filename = 'testfile_orders.dat'
+    Bangazon.line_items_filename = 'testfile_line_items.dat'
+
     @classmethod
     def setUpClass(self):
         self.bangazon = Bangazon()
