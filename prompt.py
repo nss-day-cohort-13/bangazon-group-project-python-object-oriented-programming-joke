@@ -1,8 +1,30 @@
 def prompt(message):
+    """
+    Prompt the user for input
+
+    Arguments:
+        message     the message used in the prompt
+
+    Returns:
+        the entered value
+    """
+
     print('\n' + message)
     return input('> ')
 
 def show_menu(heading, menu_dict, prompt_message):
+    """
+    Get a menu selection from the user
+
+    Arguments:
+        heading         a heading to show for the menu
+        menu_dict       the menu of options and values
+        prompt_message  a message to use as a prompt
+
+    Returns:
+        the matched value from the menu
+    """
+
     key_matches = []
     while len(key_matches) != 1:
         print('\n' + heading)
