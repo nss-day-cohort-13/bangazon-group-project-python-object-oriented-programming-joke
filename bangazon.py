@@ -127,3 +127,16 @@ class Bangazon(object):
         }
 
         return popular
+
+    def create_new_payment(self, payment_type, account_number, customer_id):
+        """Create New Payment
+
+        Arguments:
+        payment_type        ie. visa, mastercard
+        account_number      number associated with account_number
+        customer_id         id number of active customer"""
+
+        if self.active_customer_id == 0:
+            return
+        new_payment = PaymentOption(payment_type, account_number, customer_id)
+        self.payment_options[new_payment.id] = new_payment
