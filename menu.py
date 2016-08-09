@@ -61,7 +61,10 @@ class Menu:
         print('Add Products')
 
     def prompt_complete_order(self):
-        print('Complete Order')
+        payment_menu = {
+            '{}. {}'.format(p.id, p.name):p for p in self.bang.payment_options.values()}
+        chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
+        self.bang.pay_order(chosen_payment.id)
 
     def print_popular_products(self):
         print('Print Popular Products')
