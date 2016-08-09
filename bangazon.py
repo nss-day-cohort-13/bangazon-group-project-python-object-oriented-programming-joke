@@ -17,25 +17,52 @@ class Bangazon(object):
         self.active_order_id = 0
 
     def create_new_user(self, name, address, city, state, zipcode, phone):
-        new_cust = Customer(name, address, city, state, zipcode, phone)
+        """
+        Add a new customer to the customers dictionary
 
+        Arguments:
+            name        new customer's name
+            address     new customer's street address
+            city        new customer's city
+            state       new customer's state
+            zipcode     new customer's zip code
+            phone       new customer's phone number
+        """
+        new_cust = Customer(name, address, city, state, zipcode, phone)
         self.customers[new_cust.id] = new_cust
 
     def pay_order(self):
+        """
+        Pay/close an open order
+
+        """
         if self.active_order_id == 0:
             return
 
         active_order = self.orders[self.active_order_id]
-
         active_order.is_paid = True
 
     def create_new_order(self, customer_id, payment_option_id):
+        """
+        Create a new order, add it to orders dictionary
+
+        Arguments:
+            customer_id         the id of the active customer
+            payment_option_id   the id of the selected payment option
+        """
         if self.active_order_id == 0:
             new_order = Order(customer_id, payment_option_id=0, is_paid=False)
             self.orders[new_order.id] = new_order
             self.active_order_id = new_order.id
 
     def add_product_to_order(self, order_id, product_id):
+        """
+        Add selected product to an order
+
+        Arguments:
+            order_id     the id of the current order
+            product_id   the id of the selected product
+        """
         new_line_item = OrderLineItem(order_id, product_id)
         self.order_line_items[new_line_item.id] = new_line_item
 
@@ -44,7 +71,7 @@ class Bangazon(object):
         Set active customer
 
         Arguments:
-        customer_id   the id of the active customer
+            customer_id   the id of the active customer
         """
         self.active_customer_id = customer_id
 
