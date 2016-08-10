@@ -13,9 +13,11 @@ class Menu:
             title = 'Welcome to Bangazon! Command Line Ordering System'
 
             heading = ''
+            heading += '\033[34m'
             heading += '*' * 54 + '\n'
-            heading += '*' + title.center(52, ' ') + '*' + '\n'
+            heading += '*\033[36m' + title.center(52, ' ') + '\033[34m*\n'
             heading += '*' * 54 + '\n'
+            heading += '\033[37;40m'
 
             menu = {
                 '1. Create a customer account': self.prompt_customer,
