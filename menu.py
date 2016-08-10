@@ -82,6 +82,12 @@ class Menu:
             '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
         self.bang.pay_order(chosen_payment.id)
+        print('Your order is complete! You paid ${:.2f} with your {}.'.format(
+            sum([self.bang.products[item.product_id].price
+                for item in self.bang.order_line_items.values()
+                if item.order_id == self.bang.active_order_id]),
+            chosen_payment.payment_type))
+        input("")
 
     def print_popular_products(self):
         self.clear_menu()
