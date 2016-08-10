@@ -84,6 +84,7 @@ class Bangazon(object):
         active_order = self.orders[self.active_order_id]
         active_order.payment_option_id = payment_option_id
         active_order.is_paid = True
+        self.active_order_id = 0
         serialize(self.orders, Bangazon.orders_filename)
 
     def create_new_order(self, customer_id):
@@ -127,7 +128,8 @@ class Bangazon(object):
         active_customer_orders = [
             order.id
             for order in self.orders.values()
-            if order.customer_id == self.active_customer_id]
+            if order.customer_id == self.active_customer_id and
+                not self.orders[order.id].is_paid]
         if len(active_customer_orders) > 0:
             self.active_order_id = active_customer_orders[-1]
 
