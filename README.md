@@ -4,6 +4,8 @@
 
 A Python3 command line application for purchasing products where data persists between sessions.
 
+Run `python menu.py` to start the program.
+
 ## Interface Displays
 
 ### Main Menu
