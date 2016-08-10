@@ -47,9 +47,9 @@ Enter phone number
 ### Choose active customer
 
 ```bash
-Which customer will be active?
-1. John Q. Public
-1. Svetlana Z. Herevazena
+User List:
+1. Human Person
+
 >
 ```
 
@@ -69,11 +69,19 @@ Enter account number
 When a product is selected to order, the menu of products is shown again.
 
 ```bash
-1. Diapers
-2. Case of Cracking Cola
-3. Bicycle
-4. AA Batteries
-9. Done adding products
+Add Products                     
+
+Products:                        
+1. Charmin                       
+2. Cottenelle                    
+3. Everyone Poops: the Book      
+4. Party Pooper: the game        
+5. Nickleback                    
+6. Sharknado 3                   
+7. Back to main menu             
+
+
+>     
 ```
 
 ### Complete an Order
@@ -110,13 +118,16 @@ When selecting this option, you a report is generated resembling the following.
 ```bash
 Product           Orders     Customers  Revenue
 *******************************************************
-AA Batteries      100         20        $990.90
-Diapers           50          10        $640.95
-Case of Cracki... 40          30        $270.96
+Cottenelle        2          1          $13.00
+Charmin           1          1          $7.00
+Everyone Poops... 1          1          $12.99
+Nickleback        1          1          $3.50
+Party Pooper: ... 0          0          $0.00
+Sharknado 3       0          0          $0.00
 *******************************************************
-Totals:           190         60        $1,902.81
+Totals:           5          4          $36.49
 
--> Press any key to return to main menu
+Press ENTER to continue.
 ```
 
 1. The product column is 18 characters wide, and displays a maximum of 17 characters for the product name.
