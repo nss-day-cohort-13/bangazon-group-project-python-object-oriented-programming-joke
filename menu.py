@@ -63,14 +63,20 @@ class Menu:
         self.bang.create_new_payment(payment_type, account_number, self.bang.active_customer_id)
 
     def prompt_add_product(self):
-        self.clear_menu()
-        print('Add Products')
-        product_menu = {
-            '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
-        chosen_product = show_menu('', product_menu, '')
-        self.bang.create_new_order(self.bang.active_customer_id)
-        self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
-        print('You have added ' + chosen_product.name + ' to your shopping cart')
+        while True:
+            self.clear_menu()
+            print('Add Products')
+            product_menu = {
+                '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
+            product_menu['7. Back to main menu'] = None
+            chosen_product = show_menu('', product_menu, '')
+            if chosen_product == None:
+                self.main()
+            else:
+                self.bang.create_new_order(self.bang.active_customer_id)
+                self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
+                print('You have added ' + chosen_product.name + ' to your shopping cart')
+                input('Press enter to continue adding to your cart')
 
     def prompt_complete_order(self):
         self.clear_menu()
