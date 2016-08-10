@@ -99,7 +99,9 @@ class Menu:
         print(title_string.format('Product', 'Orders', 'Customers', 'Revenue'))
         print('*' * total_width)
         for p in products:
-            name = (p['name'] if len(p['name']) <= 17 else p['name'][:14] + '...') + ' '
+            name = p['name']
+            # limit name string length
+            name = (name if len(name) <= 17 else name[:14] + '...') + ' '
             orders = p['order_count']
             customers = p['customer_count']
             revenue = p['revenue']
