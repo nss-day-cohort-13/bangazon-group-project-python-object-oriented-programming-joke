@@ -85,7 +85,7 @@ class Menu:
             product_menu = {
                 '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
             product_menu['7. Back to main menu'] = None
-            chosen_product = show_menu('Proucts:', product_menu, '')
+            chosen_product = show_menu('Products:', product_menu, '')
 
             if chosen_product is None:
                 break
