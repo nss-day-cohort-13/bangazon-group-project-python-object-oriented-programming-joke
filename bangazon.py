@@ -161,6 +161,10 @@ class Bangazon(object):
                     if li.product_id == prod.id])
             })
 
+        # sort products by order_count
+        popular['products'].sort(key=lambda product: product['order_count'],
+                                 reverse=True)
+
         # store totalsuu
         popular['totals'] = {
             'order_sum': sum([p['order_count'] for p in popular['products']]),
