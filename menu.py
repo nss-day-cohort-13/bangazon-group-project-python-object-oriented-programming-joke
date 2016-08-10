@@ -34,6 +34,7 @@ class Menu:
 
     def prompt_customer(self):
         self.clear_menu()
+
         name = prompt('Enter Customer Name')
         address = prompt('Enter Street Name')
         city = prompt('Enter City')
@@ -41,40 +42,50 @@ class Menu:
         zipcode = prompt('Enter Zip Code')
         phone = prompt('Enter Phone Number')
         self.bang.create_new_user(name, address, city, state, zipcode, phone)
+
         print('Your new user has been created')
         pause()
 
     def prompt_choose_customer(self):
         self.clear_menu()
+
         customer_menu = {
             '{}. {}'.format(c.id, c.name):c for c in self.bang.customers.values()}
-        chosen_user = show_menu('', customer_menu, '')
+        chosen_user = show_menu('User List:', customer_menu, '')
         self.bang.select_active_customer(chosen_user.id)
+
         print('You are using Bangazon as ' + chosen_user.name)
         pause()
 
     def prompt_create_payment(self):
         self.clear_menu()
+
         if self.bang.active_customer_id == 0:
-            print('You must choose a customer account first')
-            self.prompt_choose_customer()
+            pause('You must choose a customer account first')
             return
 
         payment_type = prompt('Enter Payment Type (e.g. AmEx, Visa, Checking)')
         account_number = prompt('Enter Account Number')
         self.bang.create_new_payment(payment_type, account_number, self.bang.active_customer_id)
+
         print('New Payment Option created as {} with account number {}'
             .format(payment_type, account_number))
         pause()
 
     def prompt_add_product(self):
+        self.clear_menu()
+
+        if self.bang.active_customer_id == 0:
+            pause('Please choose a user first.')
+            return
+
         while True:
             self.clear_menu()
             print('Add Products')
             product_menu = {
                 '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
             product_menu['7. Back to main menu'] = None
-            chosen_product = show_menu('', product_menu, '')
+            chosen_product = show_menu('Products:', product_menu, '')
 
             if chosen_product is None:
                 break
@@ -92,17 +103,22 @@ class Menu:
     def prompt_complete_order(self):
         self.clear_menu()
         if self.bang.active_order_id == 0:
-            print('You must have an active order before you can checkout')
-            pause()
+            pause('You must have an active order before you can checkout')
             return
+
         order_total = sum([self.bang.products[item.product_id].price
                 for item in self.bang.order_line_items.values()
                 if item.order_id == self.bang.active_order_id])
-        print('Your order total is ${:.2f}.'.format(order_total))
+        should_continue = prompt('Your order total is ${:.2f}. Pay now? [Y/n]'
+                                    .format(order_total))
+
+        if should_continue and should_continue.lower()[0] == 'n': return
+
         payment_menu = {
             '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
         self.bang.pay_order(chosen_payment.id)
+
         print('Your order is complete! You paid ${:.2f} with your {}.'.format(
             order_total,
             chosen_payment.payment_type))
