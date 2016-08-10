@@ -80,7 +80,8 @@ class Menu:
                 break
 
             self.bang.create_new_order(self.bang.active_customer_id)
-            self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
+            self.bang.add_product_to_order(self.bang.active_order_id, chosen_product.id)
+
             order_total = sum([self.bang.products[item.product_id].price
                     for item in self.bang.order_line_items.values()
                     if item.order_id == self.bang.active_order_id])
@@ -91,7 +92,8 @@ class Menu:
     def prompt_complete_order(self):
         self.clear_menu()
         if self.bang.active_order_id == 0:
-            print("You must have an active order before you can checkout")
+            print('You must have an active order before you can checkout')
+            pause()
             return
         order_total = sum([self.bang.products[item.product_id].price
                 for item in self.bang.order_line_items.values()
