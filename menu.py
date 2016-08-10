@@ -77,7 +77,33 @@ class Menu:
         self.bang.pay_order(chosen_payment.id)
 
     def print_popular_products(self):
-        print('Print Popular Products')
+        popular = self.bang.get_popular_products()
+        products = popular['products']
+        totals = popular['totals']
+
+        products_col_width = 18
+        orders_col_width = 11
+        customers_col_width = 11
+        revenue_col_width = 15
+        total_width = products_col_width + \
+                      orders_col_width + \
+                      customers_col_width + \
+                      revenue_col_width
+
+        print()
+        print('{:<18}{:<11}{:<11}{:<15}'.format('Product', 'Orders', 'Customers', 'Revenue'))
+        print('*' * total_width)
+        for p in products:
+            name = p['name'] if len(p['name']) <= 17 else p['name'][:14] + '...'
+            orders = p['order_count']
+            customers = p['customer_count']
+            revenue = p['revenue']
+            print('{:<17} {:<11}{:<11}${:<14,.2f}'.format(name, orders, customers, revenue))
+        print('*' * total_width)
+        print('{:<18}{:<11}{:<11}${:<14,.2f}'
+            .format('Totals:', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
+
+        input('\nPress ENTER to continue.')
 
 if __name__ == '__main__':
     Menu().main()
