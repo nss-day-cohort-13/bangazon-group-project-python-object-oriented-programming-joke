@@ -51,7 +51,7 @@ class Menu:
 
         customer_menu = {
             '{}. {}'.format(c.id, c.name):c for c in self.bang.customers.values()}
-        chosen_user = show_menu('', customer_menu, '')
+        chosen_user = show_menu('User List:', customer_menu, '')
         self.bang.select_active_customer(chosen_user.id)
 
         print('You are using Bangazon as ' + chosen_user.name)
@@ -85,7 +85,7 @@ class Menu:
             product_menu = {
                 '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
             product_menu['7. Back to main menu'] = None
-            chosen_product = show_menu('', product_menu, '')
+            chosen_product = show_menu('Proucts:', product_menu, '')
 
             if chosen_product is None:
                 break
@@ -109,8 +109,11 @@ class Menu:
         order_total = sum([self.bang.products[item.product_id].price
                 for item in self.bang.order_line_items.values()
                 if item.order_id == self.bang.active_order_id])
-        print('Your order total is ${:.2f}.'.format(order_total))
-        
+        should_continue = prompt('Your order total is ${:.2f}. Pay now? [Y/n]'
+                                    .format(order_total))
+
+        if should_continue and should_continue.lower()[0] == 'n': return
+
         payment_menu = {
             '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
