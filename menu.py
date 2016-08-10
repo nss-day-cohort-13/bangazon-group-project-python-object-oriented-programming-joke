@@ -71,7 +71,7 @@ class Menu:
             product_menu['7. Back to main menu'] = None
             chosen_product = show_menu('', product_menu, '')
             if chosen_product == None:
-                self.main()
+                break
             else:
                 self.bang.create_new_order(self.bang.active_customer_id)
                 self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
