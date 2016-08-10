@@ -1,3 +1,4 @@
+import os
 from bangazon import *
 from prompt import *
 
@@ -8,6 +9,7 @@ class Menu:
 
     def main(self):
         while True:
+            self.clear_menu()
             title = 'Welcome to Bangazon! Command Line Ordering System'
 
             heading = '\n'
@@ -31,6 +33,7 @@ class Menu:
             choice()
 
     def prompt_customer(self):
+        self.clear_menu()
         name = prompt('Enter Customer Name')
         address = prompt('Enter Street Name')
         city = prompt('Enter City')
@@ -41,6 +44,7 @@ class Menu:
         print('Your new user has been created')
 
     def prompt_choose_customer(self):
+        self.clear_menu()
         customer_menu = {
             '{}. {}'.format(c.id, c.name):c for c in self.bang.customers.values()}
         chosen_user = show_menu('', customer_menu, '')
@@ -48,6 +52,7 @@ class Menu:
         print('You are using Bangazon as ' + chosen_user.name)
 
     def prompt_create_payment(self):
+        self.clear_menu()
         if self.bang.active_customer_id == 0:
             print('You must choose a customer account first')
             self.prompt_choose_customer()
@@ -58,6 +63,7 @@ class Menu:
         self.bang.create_new_payment(payment_type, account_number, self.bang.active_customer_id)
 
     def prompt_add_product(self):
+        self.clear_menu()
         print('Add Products')
         product_menu = {
             '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
@@ -67,6 +73,7 @@ class Menu:
         print('You have added ' + chosen_product.name + ' to your shopping cart')
 
     def prompt_complete_order(self):
+        self.clear_menu()
         if self.bang.active_order_id == 0:
             print("You must have an active order before you can checkout")
             return
@@ -77,6 +84,7 @@ class Menu:
         self.bang.pay_order(chosen_payment.id)
 
     def print_popular_products(self):
+        self.clear_menu()
         popular = self.bang.get_popular_products()
         products = popular['products']
         totals = popular['totals']
@@ -112,6 +120,12 @@ class Menu:
 
         # wait to continue
         input('\nPress ENTER to continue.')
+
+    def clear_menu(self):
+        if os.name == 'nt':
+            os.system('cls')
+        else:
+            os.system('clear')
 
 if __name__ == '__main__':
     Menu().main()
