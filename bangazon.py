@@ -35,7 +35,7 @@ class Bangazon(object):
         self.products = deserialize(Bangazon.products_filename, dict())
         self.orders = deserialize(Bangazon.orders_filename, dict())
         self.order_line_items = deserialize(Bangazon.line_items_filename, dict())
-        
+
         Customer.next_customer_id = len(self.customers) + 1
         PaymentOption.next_payment_option_id = len(self.payment_options) + 1
         Product.next_product_id = len(self.products) + 1
@@ -151,16 +151,20 @@ class Bangazon(object):
                 'name': prod.name,
                 'product_id': prod.id,
                 'count': len([
-                    li.order_id for li in self.order_line_items.values()
+                    li.id 
+                    for li in self.order_line_items.values()
                     if li.product_id == prod.id]),
                 'order_count': len({
-                    li.order_id for li in self.order_line_items.values()
+                    li.order_id
+                    for li in self.order_line_items.values()
                     if li.product_id == prod.id}),
                 'customer_count': len({
-                    self.orders[li.order_id].customer_id for li in self.order_line_items.values()
+                    self.orders[li.order_id].customer_id
+                    for li in self.order_line_items.values()
                     if li.product_id == prod.id}),
                 'revenue': sum([
-                    prod.price for li in self.order_line_items.values()
+                    prod.price
+                    for li in self.order_line_items.values()
                     if li.product_id == prod.id])
             })
 

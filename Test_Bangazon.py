@@ -43,8 +43,7 @@ class TestBangazon(unittest.TestCase):
         bangazon = Bangazon()
         initial_order_count = len(bangazon.orders)
         customer_id = 1
-        payment_option_id = 0
-        bangazon.create_new_order(customer_id, payment_option_id)
+        bangazon.create_new_order(customer_id)
         self.assertEqual(len(bangazon.orders), initial_order_count + 1)
 
     def test_add_product_to_order(self):
@@ -134,6 +133,9 @@ class TestBangazon(unittest.TestCase):
                 }
             ]
         }
+
+        expected['products'].sort(key=lambda product: product['order_count'],
+                                  reverse=True)
 
         result = bangazon.get_popular_products()
         self.assertEqual(result, expected)
