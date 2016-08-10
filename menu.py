@@ -86,10 +86,10 @@ class Menu:
         orders_col_width = 11
         customers_col_width = 11
         revenue_col_width = 15
-        total_width = products_col_width + \
-                      orders_col_width + \
-                      customers_col_width + \
-                      revenue_col_width
+        total_width = (products_col_width +
+                       orders_col_width +
+                       customers_col_width +
+                       revenue_col_width)
 
         # formating strings for table lines
         title_string = '{:<18}{:<11}{:<11}{:<15}'
