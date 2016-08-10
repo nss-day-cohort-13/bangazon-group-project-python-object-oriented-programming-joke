@@ -116,7 +116,7 @@ class Bangazon(object):
 
     def select_active_customer(self, customer_id):
         """
-        Set active customer
+        Set active customer and active order if exists for customer
 
         Arguments:
             customer_id   the id of the active customer
