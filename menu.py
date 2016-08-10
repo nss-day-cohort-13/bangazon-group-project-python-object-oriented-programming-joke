@@ -74,7 +74,7 @@ class Menu:
                 for item in self.bang.order_line_items.values()
                 if item.order_id == self.bang.active_order_id])
         print('You have added ' + chosen_product.name + ' to your shopping cart')
-        print('Your current total is {}.'.format(order_total))
+        print('Your current total is ${:.2f}.'.format(order_total))
         input('')
 
     def prompt_complete_order(self):
