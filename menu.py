@@ -70,24 +70,30 @@ class Menu:
         chosen_product = show_menu('', product_menu, '')
         self.bang.create_new_order(self.bang.active_customer_id)
         self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
+        order_total = sum([self.bang.products[item.product_id].price
+                for item in self.bang.order_line_items.values()
+                if item.order_id == self.bang.active_order_id])
         print('You have added ' + chosen_product.name + ' to your shopping cart')
+        print('Your current total is {}.'.format(order_total))
+        input('')
 
     def prompt_complete_order(self):
         self.clear_menu()
         if self.bang.active_order_id == 0:
             print("You must have an active order before you can checkout")
             return
-
+        order_total = sum([self.bang.products[item.product_id].price
+                for item in self.bang.order_line_items.values()
+                if item.order_id == self.bang.active_order_id])
+        print('Your order total is ${:.2f}.'.format(order_total))
         payment_menu = {
             '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
         self.bang.pay_order(chosen_payment.id)
         print('Your order is complete! You paid ${:.2f} with your {}.'.format(
-            sum([self.bang.products[item.product_id].price
-                for item in self.bang.order_line_items.values()
-                if item.order_id == self.bang.active_order_id]),
+            order_total,
             chosen_payment.payment_type))
-        input("")
+        input('')
 
     def print_popular_products(self):
         self.clear_menu()
