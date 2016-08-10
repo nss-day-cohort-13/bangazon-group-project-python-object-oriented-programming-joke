@@ -1,3 +1,14 @@
+def pause(message='\nPress ENTER to continue.'):
+    """
+    Pause to wait for interaction
+
+    Arguments:
+        message (optional)     the pause message
+            defaults to ''\nPress ENTER to continue.'
+    """
+
+    input(message)
+
 def prompt(message):    # pragma: no cover
     """
     Prompt the user for input
