@@ -81,6 +81,7 @@ class Menu:
         products = popular['products']
         totals = popular['totals']
 
+        # column widths
         products_col_width = 18
         orders_col_width = 11
         customers_col_width = 11
@@ -90,6 +91,7 @@ class Menu:
                       customers_col_width + \
                       revenue_col_width
 
+        # formating strings for table lines
         title_string = '{:<18}{:<11}{:<11}{:<15}'
         line_string = '{:<18}{:<11}{:<11}${:<14,.2f}'
 
@@ -106,6 +108,7 @@ class Menu:
         print(line_string.format(
             'Totals:', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
 
+        # wait to continue
         input('\nPress ENTER to continue.')
 
 if __name__ == '__main__':
