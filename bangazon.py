@@ -28,8 +28,6 @@ class Bangazon(object):
     def __init__(self):
         """
         Initialize bangazon, deserialize data files for customers, payment options, products, orders, and line items
-
-
         """
 
         self.customers = deserialize(Bangazon.customers_filename, dict())
@@ -37,6 +35,12 @@ class Bangazon(object):
         self.products = deserialize(Bangazon.products_filename, dict())
         self.orders = deserialize(Bangazon.orders_filename, dict())
         self.order_line_items = deserialize(Bangazon.line_items_filename, dict())
+        
+        Customer.next_customer_id = len(self.customers) + 1
+        PaymentOption.next_payment_option_id = len(self.payment_options) + 1
+        Product.next_product_id = len(self.products) + 1
+        Order.next_order_id = len(self.orders) + 1
+        OrderLineItem.next_line_item_id = len(self.order_line_items) + 1
 
         self.active_customer_id = 0
         self.active_order_id = 0
@@ -66,8 +70,8 @@ class Bangazon(object):
         account_number      number associated with account_number
         customer_id         id number of active customer"""
 
-        if self.active_customer_id == 0:
-            return
+        if self.active_customer_id == 0: return
+
         new_payment = PaymentOption(payment_type, account_number, customer_id)
         self.payment_options[new_payment.id] = new_payment
         serialize(self.payment_options, Bangazon.payment_options_filename)
@@ -75,11 +79,9 @@ class Bangazon(object):
     def pay_order(self, payment_option_id):
         """
         Pay/close an open order
-
         """
 
-        if self.active_order_id == 0:
-            return
+        if self.active_order_id == 0: return
 
         active_order = self.orders[self.active_order_id]
         active_order.payment_option_id = payment_option_id
@@ -122,6 +124,7 @@ class Bangazon(object):
         Arguments:
             customer_id   the id of the active customer
         """
+
         self.active_customer_id = customer_id
 
         # set active order if unfinished order exists
