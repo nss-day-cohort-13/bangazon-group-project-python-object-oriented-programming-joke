@@ -116,12 +116,20 @@ class Bangazon(object):
 
     def select_active_customer(self, customer_id):
         """
-        Set active customer
+        Set active customer and active order if exists for customer
 
         Arguments:
             customer_id   the id of the active customer
         """
         self.active_customer_id = customer_id
+
+        # set active order if unfinished order exists
+        active_customer_orders = [
+            order.id
+            for order in self.orders.values()
+            if order.customer_id == self.active_customer_id]
+        if len(active_customer_orders) > 0:
+            self.active_order_id = active_customer_orders[-1]
 
     def get_popular_products(self):
         """
