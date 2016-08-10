@@ -80,6 +80,7 @@ class Menu:
                 for item in self.bang.order_line_items.values()
                 if item.order_id == self.bang.active_order_id]),
             chosen_payment.payment_type))
+        input("")
 
     def print_popular_products(self):
         print('Print Popular Products')
