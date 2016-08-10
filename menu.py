@@ -13,9 +13,11 @@ class Menu:
             title = 'Welcome to Bangazon! Command Line Ordering System'
 
             heading = ''
+            heading += '\033[34m'
             heading += '*' * 54 + '\n'
-            heading += '*' + title.center(52, ' ') + '*' + '\n'
+            heading += '*\033[36m' + title.center(52, ' ') + '\033[34m*\n'
             heading += '*' * 54 + '\n'
+            heading += '\033[37;40m'
 
             menu = {
                 '1. Create a customer account': self.prompt_customer,
@@ -108,7 +110,7 @@ class Menu:
         order_total = sum([self.bang.products[item.product_id].price
                 for item in self.bang.order_line_items.values()
                 if item.order_id == self.bang.active_order_id])
-        should_continue = prompt('Your order total is ${:.2f}. Pay now? [Y/n]'
+        should_continue = prompt('Your order total is ${:.2f}. Pay now? [\033[32mY\033[37m/n]'
                                     .format(order_total))
 
         if should_continue and should_continue.lower()[0] == 'n': return
@@ -143,9 +145,8 @@ class Menu:
         title_string = '{:<18}{:<11}{:<11}{:<15}'
         line_string = '{:<18}{:<11}{:<11}${:<14,.2f}'
 
-        print()
-        print(title_string.format('Product', 'Orders', 'Customers', 'Revenue'))
-        print('*' * total_width)
+        print('\033[36m' + title_string.format('Product', 'Orders', 'Customers', 'Revenue'))
+        print('\033[34m*\033[37m' * total_width)
         for p in products:
             name = p['name']
             # limit name string length
@@ -154,9 +155,9 @@ class Menu:
             customers = p['customer_count']
             revenue = p['revenue']
             print(line_string.format(name, orders, customers, revenue))
-        print('*' * total_width)
+        print('\033[34m*\033[37m' * total_width)
         print(line_string.format(
-            'Totals:', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
+            '\033[36mTotals:\033[37m', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
 
         # wait to continue
         pause()
