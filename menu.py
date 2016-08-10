@@ -12,7 +12,7 @@ class Menu:
             self.clear_menu()
             title = 'Welcome to Bangazon! Command Line Ordering System'
 
-            heading = '\n'
+            heading = ''
             heading += '*' * 54 + '\n'
             heading += '*' + title.center(52, ' ') + '*' + '\n'
             heading += '*' * 54 + '\n'
@@ -42,6 +42,7 @@ class Menu:
         phone = prompt('Enter Phone Number')
         self.bang.create_new_user(name, address, city, state, zipcode, phone)
         print('Your new user has been created')
+        pause()
 
     def prompt_choose_customer(self):
         self.clear_menu()
@@ -50,6 +51,7 @@ class Menu:
         chosen_user = show_menu('', customer_menu, '')
         self.bang.select_active_customer(chosen_user.id)
         print('You are using Bangazon as ' + chosen_user.name)
+        pause()
 
     def prompt_create_payment(self):
         self.clear_menu()
@@ -61,6 +63,9 @@ class Menu:
         payment_type = prompt('Enter Payment Type (e.g. AmEx, Visa, Checking)')
         account_number = prompt('Enter Account Number')
         self.bang.create_new_payment(payment_type, account_number, self.bang.active_customer_id)
+        print('New Payment Option created as {} with account number {}'
+            .format(payment_type, account_number))
+        pause()
 
     def prompt_add_product(self):
         while True:
@@ -70,17 +75,18 @@ class Menu:
                 '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
             product_menu['7. Back to main menu'] = None
             chosen_product = show_menu('', product_menu, '')
-            if chosen_product == None:
+
+            if chosen_product is None:
                 break
-            else:
-                self.bang.create_new_order(self.bang.active_customer_id)
-                self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
-                order_total = sum([self.bang.products[item.product_id].price
-                        for item in self.bang.order_line_items.values()
-                        if item.order_id == self.bang.active_order_id])
-                print('You have added ' + chosen_product.name + ' to your shopping cart')
-                print('Your current total is ${:.2f}.'.format(order_total))
-                input('Press enter to continue adding to your cart')
+
+            self.bang.create_new_order(self.bang.active_customer_id)
+            self.bang.add_product_to_order(self.bang.active_customer_id, chosen_product.id)
+            order_total = sum([self.bang.products[item.product_id].price
+                    for item in self.bang.order_line_items.values()
+                    if item.order_id == self.bang.active_order_id])
+            print('You have added ' + chosen_product.name + ' to your shopping cart')
+            print('Your current total is ${:.2f}.'.format(order_total))
+            pause('Press enter to continue adding to your cart')
 
     def prompt_complete_order(self):
         self.clear_menu()
@@ -98,7 +104,7 @@ class Menu:
         print('Your order is complete! You paid ${:.2f} with your {}.'.format(
             order_total,
             chosen_payment.payment_type))
-        input('')
+        pause()
 
     def print_popular_products(self):
         self.clear_menu()
@@ -136,7 +142,7 @@ class Menu:
             'Totals:', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
 
         # wait to continue
-        input('\nPress ENTER to continue.')
+        pause()
 
     def clear_menu(self):
         if os.name == 'nt':
