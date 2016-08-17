@@ -65,7 +65,21 @@ def select_customer_unpaid_orders(customer_id):
         """, parameters=(customer_id,), fetch_amount=1)
 
 def select_customer_payment_options(customer_id):
-    pass
+    """
+    Get list of payment options for the selected customer
+
+    Returns:
+        the rows of payment options and account numbers
+    """
+
+    return run_statement("""
+        SELECT
+            po.type AS 'Payment Type',
+            po.number AS 'Account Number',
+            po.paymentId
+        FROM Payment_Option AS po
+        WHERE po.customerId = ?
+        """, parameters=(customer_id,), fetch_amount=-1)
 
 def select_products():
     """
@@ -80,9 +94,46 @@ def select_products():
         """, fetch_amount=-1)
 
 def select_popular_products():
-    pass
+    """
+    Get table of popular products sorted by number of times ordered
 
+    Returns:
+        Table of popular products with name, number of orders, quantity ordered and total amount made
+    """
 
+    return run_statement("""
+        SELECT
+            p.name AS 'Products',
+            COUNT(l.orderId) AS 'Orders',
+            COUNT(c.customerId) AS 'Customers',
+            SUM(p.price) AS 'Revenue'
+        FROM Product p, Order_line_item l, `Order` o, Customer c
+        WHERE p.productId = l.productId
+        AND l.orderId = o.orderId
+        AND o.customerId = c.customerId
+        GROUP BY p.productId
+        ORDER BY Orders DESC
+        """, fetch_amount=-1)
+
+def select_popular_totals():
+    """
+    Get summary of popular product totals
+
+    Return:
+        Row with totals for customers, orders & total amount made
+    """
+
+    return run_statement("""
+        SELECT
+            COUNT(l.orderId) AS 'Orders',
+            COUNT(c.customerId) AS 'Customers',
+            SUM(p.price) AS 'Revenue'
+        FROM Product p, Order_line_item l, `Order` o, Customer c
+        WHERE p.productId = l.productId
+        AND l.orderId = o.orderId
+        AND o.customerId = c.customerId
+        """, fetch_amount=1)
+    
 def insert_new_customer(name, address, city, state, zip, phone):
     pass
 
