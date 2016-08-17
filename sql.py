@@ -149,7 +149,7 @@ def insert_new_customer(name, address, city, state, zip, phone):
     run_statement("""
         INSERT INTO Customer (name, address, city, state, zipcode, phoneNumber)
         VALUES (?,?,?,?,?,?)
-        """, parameters=(name, address, city, state, zipcode, phoneNumber))
+        """, parameters=(name, address, city, state, zip, phone))
 
 def insert_new_payment_option(name, account_number, customer_id):
     pass
