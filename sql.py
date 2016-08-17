@@ -133,12 +133,23 @@ def select_popular_totals():
         AND l.orderId = o.orderId
         AND o.customerId = c.customerId
         """, fetch_amount=1)
-    
+
 def insert_new_customer(name, address, city, state, zip, phone):
     pass
 
-def insert_new_payment_option(name, account_number, customer_id):
-    pass
+def insert_new_payment_option(customer_id, name, account_number):
+    """
+    Inserts the new payment option into the database
+
+    Arguments:
+        name                name of form of payment
+        number              account number of form of payment
+        customer_id         the active customer's id
+    """
+    run_statement("""
+        INSERT INTO PaymentOption (customerId, type, number)
+        VALUES (?,?,?)
+        """, parameters=(customer_id, name, account_number))
 
 def insert_new_order(customer_id):
     """
