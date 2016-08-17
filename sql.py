@@ -91,6 +91,25 @@ def select_popular_products():
         ORDER BY Orders DESC
         """, fetch_amount=-1)
 
+def select_popular_totals():
+    """
+    Get summary of popular product totals
+
+    Return:
+        Row with totals for customers, orders & total amount made
+    """
+
+    return run_statement("""
+        SELECT
+            COUNT(l.orderId) AS 'Orders',
+            COUNT(c.customerId) AS 'Customers',
+            SUM(p.price) AS 'Revenue'
+        FROM Product p, Order_line_item l, `Order` o, Customer c
+        WHERE p.productId = l.productId
+        AND l.orderId = o.orderId
+        AND o.customerId = c.customerId
+        """, fetch_amount=1)
+    
 def insert_new_customer(name, address, city, state, zip, phone):
     pass
 
