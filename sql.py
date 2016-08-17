@@ -66,10 +66,28 @@ def insert_new_payment_option(name, account_number, customer_id):
     pass
 
 def insert_new_order(customer_id):
-    pass
+    """
+    Inserts the new order into the database
+    Arguments:
+        customer_id     The current customer's id
+    """
+    run_statement("""
+        INSERT INTO Order (paymentId, customerId, isPaid)
+        VALUES (?,?,?)
+        """), (0, customer_id, 0)
 
 def insert_new_line_item(order_id, product_id):
-    pass
+    """
+    Inserts the new order line item into the database
+    Arguments:
+        order_id    the active order id
+        product_id  id of the product being added to the order
+    """
+    run_statement("""
+        INSERT INTO Order_line_item (productId, orderId)
+        VALUES (?,?)
+        """, (product_id, order_id))
+
 
 
 def update_complete_order(order_id, payment_option_id):
