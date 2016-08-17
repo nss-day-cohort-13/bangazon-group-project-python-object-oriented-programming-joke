@@ -149,7 +149,7 @@ def insert_new_customer(name, address, city, state, zip, phone):
     run_statement("""
         INSERT INTO Customer (name, address, city, state, zipcode, phoneNumber)
         VALUES (?,?,?,?,?,?)
-        """)
+        """, parameters=(name, address, city, state, zipcode, phoneNumber))
 
 def insert_new_payment_option(name, account_number, customer_id):
     pass
@@ -163,7 +163,7 @@ def insert_new_order(customer_id):
     run_statement("""
         INSERT INTO Order (paymentId, customerId)
         VALUES (?,?,?)
-        """), (0, customer_id)
+        """, parameters=(0, customer_id))
 
 def insert_new_line_item(order_id, product_id):
     """
@@ -175,7 +175,7 @@ def insert_new_line_item(order_id, product_id):
     run_statement("""
         INSERT INTO Order_line_item (productId, orderId)
         VALUES (?,?)
-        """, (product_id, order_id))
+        """, parameters=(product_id, order_id))
 
 
 
@@ -184,4 +184,4 @@ def update_complete_order(order_id, payment_option_id):
         UPDATE Order
         SET paymentId = ?, isPaid = 1
         WHERE orderId = ?
-        """, (payment_option_id, order_id))
+        """, parameters=(payment_option_id, order_id))
