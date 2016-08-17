@@ -45,3 +45,32 @@ def select_customers_for_menu():
         SELECT c.customerId, c.name
         FROM Customer AS c
         """, fetch_amount=-1)
+
+def select_customer_unpaid_orders(customer_id):
+    pass
+
+def select_customer_payment_options(customer_id):
+    pass
+
+def select_products():
+    pass
+
+def select_popular_products():
+    pass
+
+
+def insert_new_customer(name, address, city, state, zip, phone):
+    pass
+
+def insert_new_payment_option(name, account_number, customer_id):
+    pass
+
+def insert_new_order(customer_id):
+    pass
+
+def insert_new_line_item(order_id, product_id):
+    pass
+
+
+def update_complete_order(order_id, payment_option_id):
+    pass
