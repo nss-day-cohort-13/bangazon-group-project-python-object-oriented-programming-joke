@@ -32,7 +32,15 @@ def run_statement(statement, *, parameters=(), fetch_amount=0):
                 else:
                     return c.fetchmany(fetch_amount)
 
-def select_customers_menu():
+
+def select_customers_for_menu():
+    """
+    Get list of ids and customers for menu
+
+    Returns:
+        the rows of customer ids and names
+    """
+
     return run_statement("""
         SELECT c.customerId, c.name
         FROM Customer AS c
