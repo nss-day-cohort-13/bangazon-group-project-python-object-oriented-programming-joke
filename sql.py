@@ -134,7 +134,7 @@ def select_popular_totals():
         AND o.customerId = c.customerId
         """, fetch_amount=1)
     
-def insert_new_customer(name, address, city, state, zip, phone):
+def insert_new_customer(name, address, city, state, zipcode, phone):
     """
     Inserts new customer information into the database
 
@@ -149,7 +149,7 @@ def insert_new_customer(name, address, city, state, zip, phone):
     run_statement("""
         INSERT INTO Customer (name, address, city, state, zipcode, phoneNumber)
         VALUES (?,?,?,?,?,?)
-        """, parameters=(name, address, city, state, zip, phone))
+        """, parameters=(name, address, city, state, zipcode, phone))
 
 def insert_new_payment_option(name, account_number, customer_id):
     pass
