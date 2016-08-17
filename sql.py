@@ -57,9 +57,9 @@ def select_customer_unpaid_orders(customer_id):
     return run_statement("""
         SELECT o.CustomerId, o.Orderid
         FROM `Order` o
-        WHERE o.CustomerId = 6
+        WHERE o.CustomerId = ?
         AND o.isPaid = 0
-        """, fetch_amount=1)
+        """, parameters=(customer_id,), fetch_amount=1)
 
 def select_customer_payment_options(customer_id):
     pass
