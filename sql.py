@@ -70,8 +70,26 @@ def select_products():
     pass
 
 def select_popular_products():
-    pass
+    """
+    Get table of popular products sorted by number of times ordered
 
+    Returns:
+        Table of popular products with name, number of orders, quantity ordered and total amount made
+    """
+
+    return run_statement("""
+        SELECT
+            p.name AS 'Products',
+            COUNT(l.orderId) AS 'Orders',
+            COUNT(c.customerId) AS 'Customers',
+            SUM(p.price) AS 'Revenue'
+        FROM Product p, Order_line_item l, `Order` o, Customer c
+        WHERE p.productId = l.productId
+        AND l.orderId = o.orderId
+        AND o.customerId = c.customerId
+        GROUP BY p.productId
+        ORDER BY Orders DESC
+        """, fetch_amount=-1)
 
 def insert_new_customer(name, address, city, state, zip, phone):
     pass
