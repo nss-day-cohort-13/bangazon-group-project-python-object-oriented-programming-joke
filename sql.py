@@ -47,13 +47,37 @@ def select_customers_for_menu():
         """, fetch_amount=-1)
 
 def select_customer_unpaid_orders(customer_id):
-    pass
+    """
+    Get all unpaid orders for the active customer
+
+    Returns:
+        customer id and order id of any unpaid orders for that customer
+
+    Arguments:
+        customer_id     The current customer's id
+    """
+
+    return run_statement("""
+        SELECT o.CustomerId, o.Orderid
+        FROM `Order` o
+        WHERE o.CustomerId = ?
+        AND o.isPaid = 0
+        """, parameters=(customer_id,), fetch_amount=1)
 
 def select_customer_payment_options(customer_id):
     pass
 
 def select_products():
-    pass
+    """
+    Get all Product information
+
+    Returns:
+        all rows of product ids, names, and prices
+    """
+    return run_statement("""
+        SELECT *
+        FROM Product
+        """, fetch_amount=-1)
 
 def select_popular_products():
     pass
