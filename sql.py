@@ -1,6 +1,6 @@
 import sqlite3
 
-def run_statement(statement, parameters=(), fetch_amount=0):
+def run_statement(statement, *, parameters=(), fetch_amount=0):
     """
     Run a statment against the database
 
@@ -36,4 +36,4 @@ def select_customers_menu():
     return run_statement("""
         SELECT c.customerId, c.name
         FROM Customer AS c
-        """, -1)
+        """, fetch_amount=-1)
