@@ -72,9 +72,9 @@ def insert_new_order(customer_id):
         customer_id     The current customer's id
     """
     run_statement("""
-        INSERT INTO Order (paymentId, customerId, isPaid)
+        INSERT INTO Order (paymentId, customerId)
         VALUES (?,?,?)
-        """), (0, customer_id, 0)
+        """), (0, customer_id)
 
 def insert_new_line_item(order_id, product_id):
     """
@@ -91,4 +91,8 @@ def insert_new_line_item(order_id, product_id):
 
 
 def update_complete_order(order_id, payment_option_id):
-    pass
+    run_statement("""
+        UPDATE Order
+        SET paymentId = ?, isPaid = 1
+        WHERE orderId = ?
+        """, (payment_option_id, order_id))
