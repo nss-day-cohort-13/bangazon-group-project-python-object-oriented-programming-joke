@@ -31,3 +31,9 @@ def run_statement(statement, parameters=(), fetch_amount=0):
                     return c.fetchone()
                 else:
                     return c.fetchmany(fetch_amount)
+
+def select_customers_menu():
+    return run_statement("""
+        SELECT c.customerId, c.name
+        FROM Customer AS c
+        """, -1)
