@@ -133,7 +133,7 @@ def select_popular_totals():
         AND l.orderId = o.orderId
         AND o.customerId = c.customerId
         """, fetch_amount=1)
-    
+
 def insert_new_customer(name, address, city, state, zipcode, phone):
     """
     Inserts new customer information into the database

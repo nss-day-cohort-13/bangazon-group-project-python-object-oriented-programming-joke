@@ -52,11 +52,12 @@ class Menu:
         self.clear_menu()
 
         customer_menu = {
-            '{}. {}'.format(c.id, c.name):c for c in self.bang.customers.values()}
+            '{}. {}'.format(c[0], c[1]):c
+            for c in sql.select_customers_for_menu()}
         chosen_user = show_menu('User List:', customer_menu, '')
-        self.bang.select_active_customer(chosen_user.id)
+        self.bang.select_active_customer(chosen_user[0])
 
-        print('You are using Bangazon as ' + chosen_user.name)
+        print('You are using Bangazon as ' + chosen_user[1])
         pause()
 
     def prompt_create_payment(self):

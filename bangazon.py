@@ -88,7 +88,7 @@ class Bangazon(object):
         # set active order if unfinished order exists
         active_customer_orders = sql.select_customer_unpaid_orders(customer_id)
         self.active_order_id = (active_customer_orders[0]
-                                if len(active_customer_orders) > 0
+                                if active_customer_orders
                                 else 0)
 
     def get_popular_products(self):
