@@ -50,7 +50,21 @@ def select_customer_unpaid_orders(customer_id):
     pass
 
 def select_customer_payment_options(customer_id):
-    pass
+    """
+    Get list of payment options for the selected customer
+
+    Returns:
+        the rows of payment options and account numbers
+    """
+
+    return run_statement("""
+        SELECT
+            po.type AS 'Payment Type',
+            po.number AS 'Account Number',
+            po.paymentId
+        FROM Payment_Option AS po
+        WHERE po.customerId = ?
+        """, parameters=(customer_id,), fetch_amount=-1)
 
 def select_products():
     pass
