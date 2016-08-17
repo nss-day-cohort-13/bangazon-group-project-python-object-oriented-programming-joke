@@ -52,6 +52,9 @@ def select_customer_unpaid_orders(customer_id):
 
     Returns:
         customer id and order id of any unpaid orders for that customer
+
+    Arguments:
+        customer_id     The current customer's id
     """
 
     return run_statement("""
