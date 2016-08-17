@@ -86,19 +86,17 @@ class Menu:
             self.clear_menu()
             print('Add Products')
             product_menu = {
-                '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
-            product_menu['7. Back to main menu'] = None
+                '{}. {}'.format(p[0], p[1]):p for p in sql.select_products()}
+            product_menu['{}. Back to main menu'.format(len(product_menu) + 1)] = None
             chosen_product = show_menu('Products:', product_menu, '')
 
             if chosen_product is None: break
 
             self.bang.create_new_order(self.bang.active_customer_id)
-            self.bang.add_product_to_order(self.bang.active_order_id, chosen_product.id)
+            self.bang.add_product_to_order(self.bang.active_order_id, chosen_product[0])
 
-            order_total = sum([self.bang.products[item.product_id].price
-                    for item in self.bang.order_line_items.values()
-                    if item.order_id == self.bang.active_order_id])
-            print('You have added ' + chosen_product.name + ' to your shopping cart')
+            order_total = sql.select_order_total(self.bang.active_order_id)[0]
+            print('You have added ' + chosen_product[1] + ' to your shopping cart')
             print('Your current total is ${:.2f}.'.format(order_total))
             pause('Press enter to continue adding to your cart')
 
