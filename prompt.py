@@ -21,7 +21,7 @@ def prompt(message):    # pragma: no cover
     """
 
     print('\n' + message)
-    return input('> ')
+    return input('\033[36m>\033[37m ')
 
 def show_menu(heading, menu_dict, prompt_message):  # pragma: no cover
     """
