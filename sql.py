@@ -98,9 +98,9 @@ def select_customer_payment_options(customer_id):
 
     return run_statement("""
         SELECT
-            po.type AS 'Payment Type',
-            po.number AS 'Account Number',
-            po.paymentId
+            po.paymentId,
+            po.type AS PaymentType,
+            po.number AS AccountNumber
         FROM Payment_Option AS po
         WHERE po.customerId = ?
         """, parameters=(customer_id,), fetch_amount=-1)

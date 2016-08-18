@@ -158,3 +158,23 @@ class Bangazon(object):
             products.update(extra_option)
 
         return products
+
+    def get_payment_options(self, customer_id, extra_option=None):
+        """
+        Get a dictionary of the payment options from the database
+
+        Returns:
+            the resulting dictionary
+        """
+
+        # get the products from the database and convert to dictionary
+        tuple_list = sql.select_customer_payment_options(customer_id)
+        payment_options = {
+            '{}. {}'.format(p[0], p[1]): p
+            for p in tuple_list}
+
+        # add an extra option if present
+        if extra_option:
+            payment_options.update(extra_option)
+
+        return payment_options

@@ -109,11 +109,9 @@ class Menu:
 
         if should_continue and should_continue.lower()[0] == 'n': return
 
-        payment_menu = {
-            '{}. {}'.format(p[2], p[0]):p
-            for p in sql.select_customer_payment_options(self.bang.active_customer_id)}
+        payment_menu = self.bang.get_payment_options(self.bang.active_customer_id)
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
-        self.bang.pay_order(chosen_payment[2])
+        self.bang.pay_order(chosen_payment[0])
 
         print('Your order is complete! You paid ${:.2f} with your {}.'.format(
             order_total,
