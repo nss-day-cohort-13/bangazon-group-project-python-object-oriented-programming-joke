@@ -31,6 +31,8 @@ def run_statement(statement, *, parameters=(), fetch_amount=0):
                     return c.fetchone()
                 else:
                     return c.fetchmany(fetch_amount)
+            else:
+                return c.lastrowid
 
 
 def select_customers_for_menu():
@@ -156,6 +158,7 @@ def select_popular_totals():
         AND o.customerId = c.customerId
         """, fetch_amount=1)
 
+
 def insert_new_customer(name, address, city, state, zipcode, phone):
     """
     Inserts new customer information into the database
@@ -168,7 +171,7 @@ def insert_new_customer(name, address, city, state, zipcode, phone):
         zipcode     The customer's zipcode
         phoneNumber   The customer's phone number
     """
-    run_statement("""
+    return run_statement("""
         INSERT INTO Customer (name, address, city, state, zipcode, phoneNumber)
         VALUES (?,?,?,?,?,?)
         """, parameters=(name, address, city, state, zipcode, phone))
@@ -182,8 +185,8 @@ def insert_new_payment_option(customer_id, name, account_number):
         number              account number of form of payment
         customer_id         the active customer's id
     """
-    run_statement("""
-        INSERT INTO PaymentOption (customerId, type, number)
+    return run_statement("""
+        INSERT INTO Payment_Option (customerId, type, number)
         VALUES (?,?,?)
         """, parameters=(customer_id, name, account_number))
 
@@ -193,7 +196,7 @@ def insert_new_order(customer_id):
     Arguments:
         customer_id     The current customer's id
     """
-    run_statement("""
+    return run_statement("""
         INSERT INTO `Order` (paymentId, customerId)
         VALUES (?,?)
         """, parameters=(0, customer_id))
@@ -205,15 +208,14 @@ def insert_new_line_item(order_id, product_id):
         order_id    the active order id
         product_id  id of the product being added to the order
     """
-    run_statement("""
+    return run_statement("""
         INSERT INTO Order_line_item (productId, orderId)
         VALUES (?,?)
         """, parameters=(product_id, order_id))
 
 
-
 def update_complete_order(order_id, payment_option_id):
-    run_statement("""
+    return run_statement("""
         UPDATE `Order`
         SET paymentId = ?, isPaid = 1
         WHERE orderId = ?

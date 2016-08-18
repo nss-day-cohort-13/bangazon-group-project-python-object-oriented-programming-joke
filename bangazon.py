@@ -28,7 +28,7 @@ class Bangazon(object):
             phone       new customer's phone number
         """
 
-        sql.create_new_user(name, address, city, state, zipcode, phone)
+        self.active_customer_id = sql.insert_new_customer(name, address, city, state, zipcode, phone)
 
     def create_new_payment(self, payment_type, account_number, customer_id):
         """Create New Payment
@@ -40,7 +40,7 @@ class Bangazon(object):
 
         if self.active_customer_id == 0: return
 
-        sql.insert_new_payment_option(payment_type, account_number, customer_id)
+        sql.insert_new_payment_option(customer_id, payment_type, account_number)
 
     def pay_order(self, payment_option_id):
         """
@@ -54,7 +54,7 @@ class Bangazon(object):
 
     def create_new_order(self, customer_id):
         """
-        Create a new order, add it to orders dictionary
+        Create a new order if there is not an active order
 
         Arguments:
             customer_id         the id of the active customer
