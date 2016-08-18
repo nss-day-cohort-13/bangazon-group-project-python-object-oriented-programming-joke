@@ -112,3 +112,16 @@ class Bangazon(object):
                 'customer_sum': t[1],
                 'revenue_sum': t[2]}
         }
+
+    def get_customers(self):
+        """
+        Get a dictionary of the customers from the database
+
+        Returns:
+            the resulting dictionary
+        """
+
+        tuple_list = sql.select_customers_for_menu()
+        return {
+            '{}. {}'.format(c[0], c[1]): c
+            for c in tuple_list}

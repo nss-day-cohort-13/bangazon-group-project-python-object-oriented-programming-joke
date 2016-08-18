@@ -45,15 +45,13 @@ class Menu:
         phone = prompt('Enter Phone Number')
         self.bang.create_new_user(name, address, city, state, zipcode, phone)
 
-        print('Your new user has been created')
+        print(name + ' has been created')
         pause()
 
     def prompt_choose_customer(self):
         self.clear_menu()
 
-        customer_menu = {
-            '{}. {}'.format(c[0], c[1]):c
-            for c in sql.select_customers_for_menu()}
+        customer_menu = self.bang.get_customers()
         chosen_user = show_menu('User List:', customer_menu, '')
         self.bang.select_active_customer(chosen_user[0])
 
