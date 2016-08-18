@@ -61,7 +61,7 @@ class Menu:
     def prompt_create_payment(self):
         self.clear_menu()
 
-        if self.bang.is_active_customer():
+        if not self.bang.is_active_customer():
             pause('You must choose a customer account first')
             return
 
@@ -76,7 +76,7 @@ class Menu:
     def prompt_add_product(self):
         self.clear_menu()
 
-        if self.bang.is_active_customer() == 0:
+        if not self.bang.is_active_customer():
             pause('Please choose a user first.')
             return
 
@@ -99,7 +99,7 @@ class Menu:
 
     def prompt_complete_order(self):
         self.clear_menu()
-        if self.bang.active_order_id == 0:
+        if not self.bang.is_active_order():
             pause('You must have an active order before you can checkout')
             return
 

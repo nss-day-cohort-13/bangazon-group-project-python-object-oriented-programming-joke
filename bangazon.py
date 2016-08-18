@@ -150,7 +150,7 @@ class Bangazon(object):
         # get the products from the database and convert to dictionary
         tuple_list = sql.select_products()
         products = {
-            '{}. {}'.format(p[0], p[1]):p
+            '{}. {}'.format(p[0], p[1]): p
             for p in tuple_list}
 
         # add an extra option if present
