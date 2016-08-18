@@ -83,9 +83,8 @@ class Menu:
         while True:
             self.clear_menu()
             print('Add Products')
-            product_menu = {
-                '{}. {}'.format(p[0], p[1]):p for p in sql.select_products()}
-            product_menu['{}. Back to main menu'.format(len(product_menu) + 1)] = None
+            product_menu = self.bang.get_products({
+                '99. Back to main menu':None})
             chosen_product = show_menu('Products:', product_menu, '')
 
             if chosen_product is None: break

@@ -119,7 +119,7 @@ class Bangazon(object):
     def is_active_order(self):
         return self.active_order_id != 0
 
-    def get_customers(self):
+    def get_customers(self, extra_option=None):
         """
         Get a dictionary of the customers from the database
 
@@ -127,7 +127,34 @@ class Bangazon(object):
             the resulting dictionary
         """
 
+        # get the customers from the database and convert to dictionary
         tuple_list = sql.select_customers_for_menu()
-        return {
+        customers = {
             '{}. {}'.format(c[0], c[1]): c
             for c in tuple_list}
+
+        # add an extra option if present
+        if extra_option:
+            customers.update(extra_option)
+
+        return customers
+
+    def get_products(self, extra_option=None):
+        """
+        Get a dictionary of the products from the database
+
+        Returns:
+            the resulting dictionary
+        """
+
+        # get the products from the database and convert to dictionary
+        tuple_list = sql.select_products()
+        products = {
+            '{}. {}'.format(p[0], p[1]):p
+            for p in tuple_list}
+
+        # add an extra option if present
+        if extra_option:
+            products.update(extra_option)
+
+        return products
