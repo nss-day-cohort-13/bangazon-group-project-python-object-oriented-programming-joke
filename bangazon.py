@@ -113,6 +113,12 @@ class Bangazon(object):
                 'revenue_sum': t[2]}
         }
 
+    def is_active_customer(self):
+        return self.active_customer_id != 0
+
+    def is_active_order(self):
+        return self.active_order_id != 0
+
     def get_customers(self):
         """
         Get a dictionary of the customers from the database
