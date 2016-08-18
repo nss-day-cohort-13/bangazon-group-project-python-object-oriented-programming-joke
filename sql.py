@@ -19,20 +19,20 @@ def run_statement(statement, *, parameters=(), fetch_amount=0):
     """
 
     with sqlite3.connect('bangazon.db') as conn:
-            c = conn.cursor()
-            c.execute(statement, parameters)
-            conn.commit()
+        c = conn.cursor()
+        c.execute(statement, parameters)
+        conn.commit()
 
-            # return resulte of appropriate fetch function
-            if fetch_amount:
-                if fetch_amount == -1:
-                    return c.fetchall()
-                elif fetch_amount == 1:
-                    return c.fetchone()
-                else:
-                    return c.fetchmany(fetch_amount)
+        # return resulte of appropriate fetch function
+        if fetch_amount:
+            if fetch_amount == -1:
+                return c.fetchall()
+            elif fetch_amount == 1:
+                return c.fetchone()
             else:
-                return c.lastrowid
+                return c.fetchmany(fetch_amount)
+        else:
+            return c.lastrowid
 
 
 def select_customers_for_menu():
