@@ -142,6 +142,7 @@ class Menu:
         # formating strings for table lines
         title_string = '{:<18}{:<11}{:<11}{:<15}'
         line_string = '{:<18}{:<11}{:<11}${:<14,.2f}'
+        total_string = '\033[36m{:<18}\033[37m{:<11}{:<11}${:<14,.2f}'
 
         print('\033[36m' + title_string.format('Product', 'Orders', 'Customers', 'Revenue'))
         print('\033[34m*\033[37m' * total_width)
@@ -154,8 +155,8 @@ class Menu:
             revenue = p['revenue']
             print(line_string.format(name, orders, customers, revenue))
         print('\033[34m*\033[37m' * total_width)
-        print(line_string.format(
-            '\033[36mTotals:\033[37m', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
+        print(total_string.format(
+            'Totals:', totals['order_sum'], totals['customer_sum'], totals['revenue_sum']))
 
         # wait to continue
         pause()
