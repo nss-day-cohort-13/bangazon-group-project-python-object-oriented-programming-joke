@@ -99,9 +99,16 @@ class Bangazon(object):
             dictionary with totals and individual products
         """
 
+        t = sql.select_popular_totals()
         return {
-            # name, product_id, order_count, customer_count, revenue
-            'products': sql.select_popular_products(),
-            # order_sum, customer_sum, revenue_sum
-            'totals': sql.select_popular_totals()
+            'products': [{
+                'name': p[0],
+                'order_count': p[1],
+                'customer_count': p[2],
+                'revenue': p[3]}
+                for p in sql.select_popular_products()],
+            'totals': {
+                'order_sum': t[0],
+                'customer_sum': t[1],
+                'revenue_sum': t[2]}
         }
