@@ -64,6 +64,28 @@ def select_customer_unpaid_orders(customer_id):
         AND o.isPaid = 0
         """, parameters=(customer_id,), fetch_amount=1)
 
+def select_order_total(order_id):
+    """
+    Calculate total cost of order
+
+    Arguments:
+        order_id    the id of the order to total
+
+    Returns:
+        the row with the order total
+    """
+
+    return run_statement("""
+        SELECT
+            SUM(p.price) AS Total
+        FROM
+            Order_line_item AS li,
+            Product as p
+        WHERE
+            li.productId = p.productId AND
+            li.orderId=?
+        """, parameters=(order_id,), fetch_amount=1)
+
 def select_customer_payment_options(customer_id):
     """
     Get list of payment options for the selected customer
@@ -172,8 +194,8 @@ def insert_new_order(customer_id):
         customer_id     The current customer's id
     """
     run_statement("""
-        INSERT INTO Order (paymentId, customerId)
-        VALUES (?,?,?)
+        INSERT INTO `Order` (paymentId, customerId)
+        VALUES (?,?)
         """, parameters=(0, customer_id))
 
 def insert_new_line_item(order_id, product_id):
@@ -192,7 +214,7 @@ def insert_new_line_item(order_id, product_id):
 
 def update_complete_order(order_id, payment_option_id):
     run_statement("""
-        UPDATE Order
+        UPDATE `Order`
         SET paymentId = ?, isPaid = 1
         WHERE orderId = ?
         """, parameters=(payment_option_id, order_id))

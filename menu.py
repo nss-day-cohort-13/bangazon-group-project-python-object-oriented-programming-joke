@@ -52,11 +52,12 @@ class Menu:
         self.clear_menu()
 
         customer_menu = {
-            '{}. {}'.format(c.id, c.name):c for c in self.bang.customers.values()}
+            '{}. {}'.format(c[0], c[1]):c
+            for c in sql.select_customers_for_menu()}
         chosen_user = show_menu('User List:', customer_menu, '')
-        self.bang.select_active_customer(chosen_user.id)
+        self.bang.select_active_customer(chosen_user[0])
 
-        print('You are using Bangazon as ' + chosen_user.name)
+        print('You are using Bangazon as ' + chosen_user[1])
         pause()
 
     def prompt_create_payment(self):
@@ -85,19 +86,17 @@ class Menu:
             self.clear_menu()
             print('Add Products')
             product_menu = {
-                '{}. {}'.format(p.id, p.name):p for p in self.bang.products.values()}
-            product_menu['7. Back to main menu'] = None
+                '{}. {}'.format(p[0], p[1]):p for p in sql.select_products()}
+            product_menu['{}. Back to main menu'.format(len(product_menu) + 1)] = None
             chosen_product = show_menu('Products:', product_menu, '')
 
             if chosen_product is None: break
 
             self.bang.create_new_order(self.bang.active_customer_id)
-            self.bang.add_product_to_order(self.bang.active_order_id, chosen_product.id)
+            self.bang.add_product_to_order(self.bang.active_order_id, chosen_product[0])
 
-            order_total = sum([self.bang.products[item.product_id].price
-                    for item in self.bang.order_line_items.values()
-                    if item.order_id == self.bang.active_order_id])
-            print('You have added ' + chosen_product.name + ' to your shopping cart')
+            order_total = float(sql.select_order_total(self.bang.active_order_id)[0])
+            print('You have added ' + chosen_product[1] + ' to your shopping cart')
             print('Your current total is ${:.2f}.'.format(order_total))
             pause('Press enter to continue adding to your cart')
 
@@ -107,22 +106,21 @@ class Menu:
             pause('You must have an active order before you can checkout')
             return
 
-        order_total = sum([self.bang.products[item.product_id].price
-                for item in self.bang.order_line_items.values()
-                if item.order_id == self.bang.active_order_id])
+        order_total = float(sql.select_order_total(self.bang.active_order_id)[0])
         should_continue = prompt('Your order total is ${:.2f}. Pay now? [\033[32mY\033[37m/n]'
                                     .format(order_total))
 
         if should_continue and should_continue.lower()[0] == 'n': return
 
         payment_menu = {
-            '{}. {}'.format(p.id, p.payment_type):p for p in self.bang.payment_options.values()}
+            '{}. {}'.format(p[2], p[0]):p
+            for p in sql.select_customer_payment_options(self.bang.active_customer_id)}
         chosen_payment = show_menu('Choose Your Payment Method', payment_menu, '')
-        self.bang.pay_order(chosen_payment.id)
+        self.bang.pay_order(chosen_payment[2])
 
         print('Your order is complete! You paid ${:.2f} with your {}.'.format(
             order_total,
-            chosen_payment.payment_type))
+            chosen_payment[0]))
         pause()
 
     def print_popular_products(self):
